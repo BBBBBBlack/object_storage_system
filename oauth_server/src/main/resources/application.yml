@@ -1,0 +1,33 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: oauth-service
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+  datasource:
+    url: jdbc:mysql://localhost:3306/cloud-user?useSSL=false
+    username: root
+    password: Aa@123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  mapper-locations: "classpath:mapper/*.xml"
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+oauth-user-details:
+  client_id: member
+  client-secret: 123123
+  grant-type: password
+  scope: read
+
+jwt:
+  keyPairName: jwt.jks
+  keyPairAlias: jwt
+  keyPairSecret: 123123
+  keyPairStoreSecret: 123123
+logging:
+  level:
+    web: debug
