@@ -1,5 +1,6 @@
 package org.example.configuration;
 
+import com.alibaba.cloud.nacos.discovery.NacosDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -3,82 +3,124 @@
   <component name="EasyCodeTableSetting">
     <option name="tableInfoMap">
       <map>
-        <entry key="library.deposit_order">
+        <entry key="object_storage_system.bucket">
           <value>
             <TableInfoDTO>
               <option name="fullColumn">
                 <list>
                   <ColumnInfoDTO>
-                    <option name="comment" value="商户订单号" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
-                    <option name="name" value="outTradeNo" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="id" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="name" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="创建者" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="creater" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="访问控制列表：&#13;&#10;0-private;&#13;&#10;1-public-read;&#13;&#10;2-public-read-write;&#13;&#10;3-authenticated-read;&#13;&#10;4-else&#13;&#10;" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="acl" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="对象锁？" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="lockEnable" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                </list>
+              </option>
+              <option name="name" value="Bucket" />
+              <option name="preName" value="" />
+              <option name="saveModelName" value="node" />
+              <option name="savePackageName" value="org.example" />
+              <option name="savePath" value="./node/src/main/java/org/example" />
+              <option name="templateGroupName" value="Default" />
+            </TableInfoDTO>
+          </value>
+        </entry>
+        <entry key="object_storage_system.user">
+          <value>
+            <TableInfoDTO>
+              <option name="fullColumn">
+                <list>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="主键——用户id" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="id" />
                     <option name="type" value="java.lang.Long" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
-                    <option name="comment" value="支付宝交易凭证号（交易未完成时为空）" />
+                    <option name="comment" value="用户邮箱（充当用户名user_name）" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
-                    <option name="name" value="tradeNo" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="userEmail" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
-                    <option name="comment" value="交易名称" />
+                    <option name="comment" value="用户昵称" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
-                    <option name="name" value="subject" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="nickName" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
-                    <option name="comment" value="交易金额" />
+                    <option name="comment" value="用户密码" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
-                    <option name="name" value="totalAmount" />
-                    <option name="type" value="java.lang.Double" />
-                  </ColumnInfoDTO>
-                  <ColumnInfoDTO>
-                    <option name="comment" value="发布订单用户id" />
-                    <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
-                    <option name="name" value="userId" />
-                    <option name="type" value="java.lang.Long" />
-                  </ColumnInfoDTO>
-                  <ColumnInfoDTO>
-                    <option name="comment" value="付款时间" />
-                    <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
-                    <option name="name" value="gmtPayment" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="password" />
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
-                    <option name="comment" value="交易状态（0为未支付，1为已支付）" />
+                    <option name="comment" value="用户电话" />
                     <option name="custom" value="false" />
-                    <option name="ext">
-                      <map />
-                    </option>
-                    <option name="name" value="tradeStatus" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="phoneNumber" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="用户头像" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="picture" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="用户状态——正常状态为1，封禁状态为0" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="userStatus" />
+                    <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="用户类型——1为普通用户，2为商户" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="type" />
                     <option name="type" value="java.lang.Integer" />
                   </ColumnInfoDTO>
                 </list>
               </option>
-              <option name="name" value="DepositOrder" />
+              <option name="name" value="User" />
               <option name="preName" value="" />
-              <option name="saveModelName" value="lib-common" />
-              <option name="savePackageName" value="com.bbbbbblack" />
-              <option name="savePath" value="./lib-common/src/main/java/com/bbbbbblack" />
-              <option name="templateGroupName" value="MybatisPlus" />
+              <option name="saveModelName" value="node" />
+              <option name="savePackageName" value="" />
+              <option name="savePath" value="./node/src/main/java" />
+              <option name="templateGroupName" value="Default" />
             </TableInfoDTO>
           </value>
         </entry>

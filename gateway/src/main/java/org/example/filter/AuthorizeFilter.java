@@ -1,5 +1,6 @@
 package org.example.filter;
 
+import com.alibaba.cloud.nacos.discovery.NacosDiscoveryClient;
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.Claims;
 import org.example.property.NotAuthUrlProperties;
@@ -7,6 +8,7 @@ import org.example.util.JwtUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.annotation.Order;
@@ -26,6 +28,9 @@ import java.util.Map;
 @Component
 @EnableConfigurationProperties(value = NotAuthUrlProperties.class)
 public class AuthorizeFilter implements GlobalFilter {
+
+    @Autowired
+    DiscoveryClient discoveryClient;
     /**
      * jwt的公钥,需要网关启动,远程调用认证中心去获取公钥
      */
@@ -61,8 +66,6 @@ public class AuthorizeFilter implements GlobalFilter {
 
         //第二步:判断Authorization的请求头是否为空
         if (StringUtils.isEmpty(authHeader)) {
-//            log.warn("需要认证的url,请求头为空");
-//            throw new GateWayException(ResultCode.AUTHORIZATION_HEADER_IS_EMPTY);
             throw new NullPointerException("需要认证的url,请求头为空");
         }
 
@@ -88,16 +91,30 @@ public class AuthorizeFilter implements GlobalFilter {
     }
 
     private ServerWebExchange wrapHeader(ServerWebExchange serverWebExchange, Claims claims) {
-        String loginUserInfo = JSON.toJSONString(claims);
 
-        //log.info("jwt的用户信息:{}",loginUserInfo);
+        String userId = claims.get("additionalInfo", Map.class).get("id").toString();
 
-        String userId = claims.get("additionalInfo", Map.class).get("userId").toString();
+        String nickName = claims.get("additionalInfo", Map.class).get("nickName").toString();
+
+        String picture = claims.get("additionalInfo", Map.class).get("picture").toString();
+
+        String phoneNumber = claims.get("additionalInfo", Map.class).get("phoneNumber").toString();
+
+        String userStatus = claims.get("additionalInfo", Map.class)
+                .get("userStatus").toString();
+
+        String type = claims.get("additionalInfo", Map.class)
+                .get("type").toString();
 
         //向headers中放文件，记得build
         ServerHttpRequest request = serverWebExchange.getRequest().mutate()
-                .header("username", claims.get("user_name", String.class))
-                .header("userId", userId)
+                .header("userEmail", claims.get("user_name", String.class))
+                .header("id", userId)
+                .header("nickName", nickName)
+                .header("picture", picture)
+                .header("phoneNumber", phoneNumber)
+                .header("userStatus", userStatus)
+                .header("type", type)
                 .build();
 
         //将现在的request 变成 change对象
@@ -116,12 +133,5 @@ public class AuthorizeFilter implements GlobalFilter {
         return false;
     }
 
-
-//    @Override
-//    public void afterPropertiesSet() throws Exception {
-//        //获取公钥
-//        // http://auth/oauth/token_key
-////        this.publicKey = jwtUtils.genPublicKey(restTemplate);
-//    }
 }
 

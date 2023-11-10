@@ -12,6 +12,7 @@
         <module>order-service</module>
         <module>gateway</module>
         <module>oauth_server</module>
+        <module>node</module>
     </modules>
 
     <packaging>pom</packaging>

@@ -5,7 +5,7 @@
 
     <select id="getUserByName" resultType="org.example.pojo.User">
         select *
-        from tb_user
-        where username = #{username}
+        from user
+        where user_email = #{userEmail}
     </select>
 </mapper>

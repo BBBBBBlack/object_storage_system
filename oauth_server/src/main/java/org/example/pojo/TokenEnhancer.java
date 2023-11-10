@@ -21,8 +21,17 @@ public class TokenEnhancer implements org.springframework.security.oauth2.provid
         final Map<String, Object> retMap = new HashMap<>();
 
         //todo 可以根据自己的业务需要 进行添加字段
-        additionalInfo.put("userId", loginUser.getUser().getId());
-//        additionalInfo.put("nickName",loginUser.get().getNickname());
+        additionalInfo.put("id", loginUser.getUser().getId());
+
+        additionalInfo.put("nickName", loginUser.getUser().getNickName());
+
+        additionalInfo.put("phoneNumber", loginUser.getUser().getPhoneNumber());
+
+        additionalInfo.put("picture", loginUser.getUser().getPicture());
+
+        additionalInfo.put("userStatus", loginUser.getUser().getUserStatus());
+
+        additionalInfo.put("type", loginUser.getUser().getType());
 
         retMap.put("additionalInfo", additionalInfo);
 

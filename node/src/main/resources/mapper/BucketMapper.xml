@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.BucketMapper">
+
+    <resultMap type="org.example.pojo.Bucket" id="BucketMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="creater" column="creater" jdbcType="VARCHAR"/>
+        <result property="acl" column="acl" jdbcType="VARCHAR"/>
+        <result property="lockEnable" column="lock_enable" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!--新增所有列-->
+    <insert id="createBucket" keyProperty="id" useGeneratedKeys="true" parameterType="org.example.pojo.Bucket">
+        insert into bucket(name, creater, acl, lock_enable)
+        values (#{name}, #{creater}, #{acl}, #{lockEnable})
+    </insert>
+    <!--    &lt;!&ndash;查询单个&ndash;&gt;-->
+    <!--    <select id="queryById" resultMap="BucketMap">-->
+    <!--        select-->
+    <!--          id, name, creater, acl, lock_enable-->
+    <!--        from bucket-->
+    <!--        where id = #{id}-->
+    <!--    </select>-->
+
+    <!--    &lt;!&ndash;查询指定行数据&ndash;&gt;-->
+    <!--    <select id="queryAllByLimit" resultMap="BucketMap">-->
+    <!--        select-->
+    <!--          id, name, creater, acl, lock_enable-->
+    <!--        from bucket-->
+    <!--        <where>-->
+    <!--            <if test="id != null">-->
+    <!--                and id = #{id}-->
+    <!--            </if>-->
+    <!--            <if test="name != null and name != ''">-->
+    <!--                and name = #{name}-->
+    <!--            </if>-->
+    <!--            <if test="creater != null and creater != ''">-->
+    <!--                and creater = #{creater}-->
+    <!--            </if>-->
+    <!--            <if test="acl != null and acl != ''">-->
+    <!--                and acl = #{acl}-->
+    <!--            </if>-->
+    <!--            <if test="lockEnable != null and lockEnable != ''">-->
+    <!--                and lock_enable = #{lockEnable}-->
+    <!--            </if>-->
+    <!--        </where>-->
+    <!--        limit #{pageable.offset}, #{pageable.pageSize}-->
+    <!--    </select>-->
+
+    <!--    &lt;!&ndash;统计总行数&ndash;&gt;-->
+    <!--    <select id="count" resultType="java.lang.Long">-->
+    <!--        select count(1)-->
+    <!--        from bucket-->
+    <!--        <where>-->
+    <!--            <if test="id != null">-->
+    <!--                and id = #{id}-->
+    <!--            </if>-->
+    <!--            <if test="name != null and name != ''">-->
+    <!--                and name = #{name}-->
+    <!--            </if>-->
+    <!--            <if test="creater != null and creater != ''">-->
+    <!--                and creater = #{creater}-->
+    <!--            </if>-->
+    <!--            <if test="acl != null and acl != ''">-->
+    <!--                and acl = #{acl}-->
+    <!--            </if>-->
+    <!--            <if test="lockEnable != null and lockEnable != ''">-->
+    <!--                and lock_enable = #{lockEnable}-->
+    <!--            </if>-->
+    <!--        </where>-->
+    <!--    </select>-->
+
+
+    <!--    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">-->
+    <!--        insert into bucket(name, creater, acl, lock_enable)-->
+    <!--        values-->
+    <!--        <foreach collection="entities" item="entity" separator=",">-->
+    <!--        (#{entity.name}, #{entity.creater}, #{entity.acl}, #{entity.lockEnable})-->
+    <!--        </foreach>-->
+    <!--    </insert>-->
+
+    <!--    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">-->
+    <!--        insert into bucket(name, creater, acl, lock_enable)-->
+    <!--        values-->
+    <!--        <foreach collection="entities" item="entity" separator=",">-->
+    <!--            (#{entity.name}, #{entity.creater}, #{entity.acl}, #{entity.lockEnable})-->
+    <!--        </foreach>-->
+    <!--        on duplicate key update-->
+    <!--        name = values(name),-->
+    <!--        creater = values(creater),-->
+    <!--        acl = values(acl),-->
+    <!--        lock_enable = values(lock_enable)-->
+    <!--    </insert>-->
+
+    <!--    &lt;!&ndash;通过主键修改数据&ndash;&gt;-->
+    <!--    <update id="update">-->
+    <!--        update bucket-->
+    <!--        <set>-->
+    <!--            <if test="name != null and name != ''">-->
+    <!--                name = #{name},-->
+    <!--            </if>-->
+    <!--            <if test="creater != null and creater != ''">-->
+    <!--                creater = #{creater},-->
+    <!--            </if>-->
+    <!--            <if test="acl != null and acl != ''">-->
+    <!--                acl = #{acl},-->
+    <!--            </if>-->
+    <!--            <if test="lockEnable != null and lockEnable != ''">-->
+    <!--                lock_enable = #{lockEnable},-->
+    <!--            </if>-->
+    <!--        </set>-->
+    <!--        where id = #{id}-->
+    <!--    </update>-->
+
+    <!--    &lt;!&ndash;通过主键删除&ndash;&gt;-->
+    <!--    <delete id="deleteById">-->
+    <!--        delete from bucket where id = #{id}-->
+    <!--    </delete>-->
+
+</mapper>
+

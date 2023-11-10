@@ -5,5 +5,5 @@ import org.example.pojo.User;
 
 @Mapper
 public interface UserMapper {
-    User getUserByName(String username);
+    User getUserByName(String userEmail);
 }
