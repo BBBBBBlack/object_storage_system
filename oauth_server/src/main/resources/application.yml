@@ -5,11 +5,11 @@ spring:
     name: oauth-service
   cloud:
     nacos:
-      server-addr: localhost:8848
+      server-addr: 192.168.43.29:8848
   datasource:
-    url: jdbc:mysql://localhost:3306/object_storage_system?useSSL=false
+    url: jdbc:mysql://localhost:3306/object_storage_system?allowPublicKeyRetrieval=true&useSSL=false
     username: root
-    password: Aa@123456
+    password: bbbbbblackfree
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
     host: 127.0.0.1
@@ -41,7 +41,7 @@ oauth-user-details:
   scope: read
 file:
   windows:
-    real-path: D:/DataBase/pictures/
+    real-path: /object_storage_system/db/pictures/
     vir-path: /file/
 jwt:
   keyPairName: jwt.jks

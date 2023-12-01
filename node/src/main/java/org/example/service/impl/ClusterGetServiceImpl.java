@@ -136,7 +136,9 @@ public class ClusterGetServiceImpl implements ClusterGetService {
             } catch (URISyntaxException e) {
                 throw new RuntimeException(e);
             }
-            set.addAll(new HashSet<>((Set<String>) result.getData()));
+            if (result.getData() != null) {
+                set.addAll(new HashSet<>((Set<String>) result.getData()));
+            }
         }
         BucketVo bucketVo = new BucketVo(Integer.getInteger(bucketId));
         bucketVo.setFileSet(set);

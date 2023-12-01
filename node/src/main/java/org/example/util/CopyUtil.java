@@ -30,6 +30,9 @@ public class CopyUtil {
         List<String> bucketIdList = new ArrayList<>();
         File file = new File(FileProperty.realPath);
         File[] tempList = file.listFiles();
+        if (tempList == null) {
+            return;
+        }
         for (File value : tempList) {
             if (value.isDirectory()) {
                 bucketIdList.add(value.getName());

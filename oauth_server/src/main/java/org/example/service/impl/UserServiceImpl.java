@@ -33,7 +33,7 @@ import java.util.UUID;
 @Service
 @Data
 @ConfigurationProperties(prefix = "oauth-user-details")
-//@PropertySource("classpath:application.yml.b")
+//@PropertySource("classpath:application.yml.bak.b")
 public class UserServiceImpl implements UserService {
 
     @Autowired

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -49,6 +50,7 @@ public class BucketServiceImpl implements BucketService {
         return new ResponseResult<>(200, "创建桶", bucket);
     }
 
+    @Transactional
     @Override
     public ResponseResult deleteBucket(Map<String, String> parameters) {
 
@@ -63,7 +65,6 @@ public class BucketServiceImpl implements BucketService {
         ) == 0) {
             return new ResponseResult(500, "没有权限");
         } else if (isInternal == 0) {
-            bucketMapper.deleteAdvancedAcl(bucketId, userId);
             servicesUtil.getInstance("node01-service").forEach(instance -> {
                 try {
                     String uri = "http://" + instance.getHost() + ":" + instance.getPort();
@@ -74,9 +75,10 @@ public class BucketServiceImpl implements BucketService {
                 }
             });
             bucketMapper.deleteBucket(bucketId);
+            bucketMapper.deleteAdvancedAcl(bucketId, userId);
         }
         //删去bucket下的所有文件
-        FileUtil.deleteDirectory(baseUrl + "realPath\\" + bucketId);
+        FileUtil.deleteDirectory(baseUrl + "realPath/" + bucketId);
         return new ResponseResult(200, "删除桶");
     }
 
