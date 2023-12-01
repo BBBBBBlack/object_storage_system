@@ -1,0 +1,75 @@
+server:
+  port: 10010 # 网关端口
+  tomcat:
+    connection-timeout: 200000 # 连接超时时间
+spring:
+  application:
+    name: gateway # 服务名称
+  cloud:
+    nacos:
+      server-addr: 192.168.43.29:8848 # nacos地址
+    gateway:
+      routes: # 网关路由配置s
+
+        - id: user-service # 路由id，自定义，只要唯一即可
+          # uri: http://127.0.0.1:8081 # 路由的目标地址 http就是固定地址
+          uri: lb://user-service # 路由的目标地址 lb就是负载均衡，后面跟服务名称
+          predicates: # 路由断言，也就是判断请求是否符合路由规则的条件
+            - Path=/user/** # 这个是按照路径匹配，只要以/user/开头就符合要求
+
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**
+
+        - id: node01-service
+          uri: lb://node01-service
+          predicates:
+            - Path=/bucket/**,/put/**,/get/**,/delete/**,/tcp/**
+
+        - id: oauth-service
+          uri: lb://oauth-service
+          predicates:
+            - Path=/oauth/**,/auth/**,/email/**
+      globalcors: # 全局的跨域处理
+        add-to-simple-url-handler-mapping: true # 解决options请求被拦截问题
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*" # 允许哪些网站的跨域请求
+            #              - "http://localhost:8080"
+            #              - "http://localhost:8081"
+            #              - "http://localhost:8082"
+            #              - "http://localhost:8083"
+            #              - "http://localhost:8084"
+            #              - "http://localhost:8085"
+            #              - "http://localhost:8088"
+            #              - "http://www.leyou.com"
+            allowedMethods: # 允许的跨域ajax的请求方式
+              - "GET"
+              - "POST"
+              - "DELETE"
+              - "PUT"
+              - "OPTIONS"
+            allowedHeaders: "*" # 允许在请求中携带的头信息
+            allowCredentials: true # 是否允许携带cookie
+            maxAge: 360000 # 这次跨域检测的有效期
+user-service:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
+gateway:
+  shouldSkipUrls:
+    - /oauth/**
+    - /auth/login
+    - /auth/register
+    - /email/**
+#    - /file/**
+file:
+  windows:
+    #  windows中的图片路径
+    real-path: /object_storage_system/db/pictures/
+    #  linux中的图片路径
+    #  real-path: /usr/projects/compus/picture/
+    vir-path: /file/
+logging:
+  level:
+    web: debug

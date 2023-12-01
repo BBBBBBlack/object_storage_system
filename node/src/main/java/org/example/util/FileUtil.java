@@ -187,6 +187,7 @@ public class FileUtil {
 
     public static Boolean uploadSimple(String filePath, String version, byte[] bytes) {
         String totalFilePath = filePath + "/" + version;
+        System.out.println(totalFilePath + "---------------------------------");
         // TODO 用现成的锁
         FileLock.lock(totalFilePath);
         if (createFile(filePath, Integer.parseInt(version))) {

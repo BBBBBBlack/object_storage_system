@@ -8,8 +8,6 @@
     <artifactId>object_storage_system</artifactId>
     <version>1.0</version>
     <modules>
-        <module>user-service</module>
-        <module>order-service</module>
         <module>gateway</module>
         <module>oauth_server</module>
         <module>node</module>

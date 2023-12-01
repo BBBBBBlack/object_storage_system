@@ -31,7 +31,7 @@ public class WriteRequestHandler extends SimpleChannelInboundHandler<WriteReques
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, WriteRequestMessage msg) throws Exception {
-        System.out.println(Thread.currentThread().getName());
+//        System.out.println(Thread.currentThread().getName());
         String uri = FileProperty.tempPath + msg.getBucketId()
                 + "/" + msg.getFileName() + "/" + msg.getVersion();
         String path = uri + "/" + msg.getSequenceId();

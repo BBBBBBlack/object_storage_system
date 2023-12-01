@@ -13,6 +13,10 @@ public interface BucketMapper {
 
     void putAcl(Integer bucketId, Integer acl);
 
+    Integer getAcl(String bucketId);
+
+    List<Integer> getPermission(String bucketId, String userId);
+
     void deleteAdvancedAcl(String bucketId, String userId);
 
     void putGrantRead(Integer bucketId, List<String> grantRead);
@@ -26,4 +30,5 @@ public interface BucketMapper {
     List<BucketVo> getBucketList(String userId);
 
     Bucket getBucketById(String bucketId);
+
 }

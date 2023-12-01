@@ -21,6 +21,18 @@
         WHERE id = #{bucketId}
     </update>
 
+    <select id="getAcl" resultType="java.lang.Integer">
+        SELECT acl
+        FROM bucket
+        WHERE id = #{bucketId}
+    </select>
+
+    <select id="getPermission" resultType="java.util.List">
+        select permission from user_bucket
+        where user_id = #{userId}
+          and bucket_id = #{bucketId}
+    </select>
+
     <delete id="deleteAdvancedAcl">
         DELETE
         FROM user_bucket

@@ -1,6 +1,7 @@
 package org.example.controller;
 
 
+import org.example.property.FileProperty;
 import org.example.service.ClusterPutService;
 import org.example.service.PutService;
 import org.example.pojo.ResponseResult;
@@ -32,6 +33,12 @@ public class PutController {
                                                @RequestParam String bucketId,
                                                @RequestParam Boolean isZip,
                                                @RequestParam Integer isInternal) {
+        System.out.println("++++++++++++++++++" + FileProperty.realPath + "++++++++++++++++++");
+        System.out.println("++++++++++++++++++" + FileProperty.tempPath + "++++++++++++++++++");
+        System.out.println("++++++++++++++++++" + FileProperty.delPath + "++++++++++++++++++");
+        System.out.println("++++++++++++++++++" + FileProperty.copyPath + "++++++++++++++++++");
+//        return new ResponseResult<>(200, "success", FileProperty.realPath + " "
+//                + FileProperty.tempPath + " " + FileProperty.delPath + " " + FileProperty.copyPath);
         SimpleFile simpleFile = new SimpleFile(file, originMd5, bucketId, isZip);
         if (isInternal == 1) {
             return putService.uploadSimple(simpleFile);

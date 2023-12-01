@@ -31,20 +31,12 @@ public class WriteRequestHandler extends SimpleChannelInboundHandler<WriteReques
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, WriteRequestMessage msg) throws Exception {
-        System.out.println(Thread.currentThread().getName());
+//        System.out.println(Thread.currentThread().getName());
         String uri = FileProperty.tempPath + msg.getBucketId()
                 + "/" + msg.getFileName() + "/" + msg.getVersion();
         String path = uri + "/" + msg.getSequenceId();
-//        File file = new File(path);
-//        if (!file.exists()) {
-////            System.out.println(path);
-//            file.createNewFile();
-//        }
-//        FileOutputStream fos = new FileOutputStream(file);
-//        fos.write(msg.getContent(), 0, msg.getContent().length);
-//        fos.close();
         FileUtil.createFile(uri, msg.getSequenceId());
-        System.out.println(path);
+//        System.out.println(path);
         FileChannel fileChannel = FileChannel.open(Paths.get(path),
                 StandardOpenOption.READ, StandardOpenOption.WRITE);
         MappedByteBuffer buffer = fileChannel

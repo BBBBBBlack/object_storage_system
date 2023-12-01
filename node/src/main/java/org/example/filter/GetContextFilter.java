@@ -2,6 +2,7 @@ package org.example.filter;
 
 import org.example.context.UserContext;
 import org.example.context.UserContextHolder;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -12,7 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
+//@Component
+@Order(1)
 @WebFilter(urlPatterns = "/*", filterName = "getContextFilter")
 public class GetContextFilter extends OncePerRequestFilter {
 

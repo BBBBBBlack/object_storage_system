@@ -49,7 +49,7 @@ public class AsyncTask {
 //
     @Async
 //    @Scheduled(cron = "0/24 * * * * ?")
-    @Scheduled(cron = "*/20 * * * * *")
+//    @Scheduled(cron = "*/20 * * * * *")
     public void autoCopy() {
         System.out.println("autoCopy");
         copyUtil.autoCopy(copyIp, copyPort);

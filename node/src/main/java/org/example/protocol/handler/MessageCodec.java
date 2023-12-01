@@ -53,7 +53,7 @@ public class MessageCodec extends MessageToMessageCodec<ByteBuf, Message> {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
-        System.out.println(Thread.currentThread().getName());
+//        System.out.println(Thread.currentThread().getName());
         ByteBuf buf = ByteBufAllocator.DEFAULT.buffer();
         msg.readBytes(buf, 6);
         //魔数bytes

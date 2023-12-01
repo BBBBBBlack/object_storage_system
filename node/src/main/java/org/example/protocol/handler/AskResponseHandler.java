@@ -23,7 +23,7 @@ public class AskResponseHandler extends SimpleChannelInboundHandler<AskResponseM
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, AskResponseMessage msg) throws Exception {
-        System.out.println(Thread.currentThread().getName());
+//        System.out.println(Thread.currentThread().getName());
         Set<Integer> fileSet = msg.getFileSet();
         if (fileSet != null) {
             String fileUri = FileProperty.copyPath + msg.getBucketId()
