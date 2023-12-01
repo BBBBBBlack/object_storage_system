@@ -11,6 +11,23 @@ spring:
     username: root
     password: Aa@123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  mail:
+    host: smtp.qq.com
+    username: 1370441324@qq.com
+    password: jbsdymeewtogjdgh
+    properties:
+      mail:
+        smtp:
+          port: 465
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            enable: true
+    default-encoding: utf-8
 mybatis:
   mapper-locations: "classpath:mapper/*.xml"
   configuration:
@@ -22,7 +39,10 @@ oauth-user-details:
   client-secret: 123123
   grant-type: password
   scope: read
-
+file:
+  windows:
+    real-path: D:/DataBase/pictures/
+    vir-path: /file/
 jwt:
   keyPairName: jwt.jks
   keyPairAlias: jwt

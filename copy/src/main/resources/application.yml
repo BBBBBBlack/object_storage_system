@@ -1,0 +1,56 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: node01-service
+#  cloud:
+#    nacos:
+#      discovery:
+#        metadata:
+#          slot: 0
+#      server-addr: localhost:8848
+  datasource:
+    url: jdbc:mysql://localhost:3306/object_storage_system?useSSL=false
+    username: root
+    password: Aa@123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    timeout: 5000ms
+    lettuce:
+      pool:
+        max-active: 50
+        max-wait: -1ms
+        max-idle: 10
+        min-idle: 5
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 500MB
+      max-request-size: 500MB
+feign:
+  httpclient:
+    enabled: true
+    max-connections: 200
+    max-connections-per-route: 50
+mybatis:
+  mapper-locations: "classpath:mapper/*.xml"
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+logging:
+  level:
+    web: debug
+  pattern:
+    dateformat: MM-dd HH:mm:ss:SSS
+
+base-url:
+  windows: D:\DataBase\object_storage_system\copy\
+tcp:
+  tcp-port: 9086
+  auto-copy:
+    enable: true
+    copy-ip: 127.0.0.1
+    copy-port: 9084

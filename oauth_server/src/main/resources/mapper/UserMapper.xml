@@ -8,4 +8,29 @@
         from user
         where user_email = #{userEmail}
     </select>
+
+    <insert id="addUser" parameterType="org.example.pojo.User">
+        insert into user (user_email, nick_name, password, phone_number, picture)
+        values (#{userEmail}, #{nickName}, #{password}, #{phoneNumber}, #{picture})
+    </insert>
+
+    <update id="updateUserById" parameterType="org.example.pojo.User">
+        UPDATE user
+        <set>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="picture != null">
+                picture = #{picture},
+            </if>
+            <if test="phoneNumber != null">
+                phone_number = #{phoneNumber},
+            </if>
+            <if test="nickName !=null">
+                nick_name = #{nickName}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
 </mapper>

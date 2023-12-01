@@ -14,6 +14,76 @@
         insert into bucket(name, creater, acl, lock_enable)
         values (#{name}, #{creater}, #{acl}, #{lockEnable})
     </insert>
+
+    <update id="putAcl">
+        UPDATE bucket
+        SET acl = #{acl}
+        WHERE id = #{bucketId}
+    </update>
+
+    <delete id="deleteAdvancedAcl">
+        DELETE
+        FROM user_bucket
+        WHERE user_id != #{userId}
+          and bucket_id = #{bucketId}
+    </delete>
+
+    <insert id="putGrantRead" parameterType="java.util.List">
+        INSERT INTO user_bucket (user_id, bucket_id, permission)
+        VALUES(
+        <foreach collection="grantRead" item="item" separator=",">
+            (SELECT id
+            FROM user
+            WHERE user_email = #{item}),
+        </foreach>
+        #{bucketId},0)
+    </insert>
+
+    <insert id="putGrantWrite" parameterType="java.util.List">
+        INSERT INTO user_bucket (user_id, bucket_id, permission)
+        VALUES(
+        <foreach collection="grantWrite" item="item" separator=",">
+            (SELECT id
+            FROM user
+            WHERE user_email = #{item}),
+        </foreach>
+        #{bucketId},1)
+    </insert>
+
+    <select id="isCreator" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM bucket
+        WHERE id = #{bucketId}
+          and creater = #{userId}
+    </select>
+
+    <delete id="deleteBucket">
+        DELETE
+        FROM bucket
+        WHERE id = #{bucketId}
+    </delete>
+
+    <select id="getBucketList" resultType="org.example.pojo.vo.BucketVo">
+        select bucket.id, bucket.name, bucket.acl, bucket.lock_enable, user.user_email as creater
+        from bucket
+                 left join user on bucket.creater = user.id
+        where bucket.creater = #{userId}
+           or bucket.id in (select bucket_id from user_bucket where user_id = #{userId})
+    </select>
+
+    <select id="getBucketById" resultType="org.example.pojo.Bucket">
+        select *
+        from bucket
+        where id = #{bucketId}
+    </select>
+
+    <!--    <insert id="insertList" parameterType="java.util.List">-->
+    <!--        INSERT INTO table_name (column1, column2, column3)-->
+    <!--        VALUES-->
+    <!--        <foreach collection="list" item="item" separator=",">-->
+    <!--            (#{item.property1}, #{item.property2}, #{item.property3})-->
+    <!--        </foreach>-->
+    <!--    </insert>-->
     <!--    &lt;!&ndash;查询单个&ndash;&gt;-->
     <!--    <select id="queryById" resultMap="BucketMap">-->
     <!--        select-->

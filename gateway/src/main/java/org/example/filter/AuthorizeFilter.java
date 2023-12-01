@@ -2,9 +2,13 @@ package org.example.filter;
 
 import com.alibaba.cloud.nacos.discovery.NacosDiscoveryClient;
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
+import org.example.pojo.ResponseResult;
 import org.example.property.NotAuthUrlProperties;
 import org.example.util.JwtUtils;
+import org.example.util.WebUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -12,7 +16,11 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
@@ -21,6 +29,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.io.PrintWriter;
 import java.security.PublicKey;
 import java.util.Map;
 
@@ -52,7 +61,6 @@ public class AuthorizeFilter implements GlobalFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         //1.过滤不需要认证的url,比如/oauth/**
         String currentUrl = exchange.getRequest().getURI().getPath();
-
         //过滤不需要认证的url
         if (shouldSkip(currentUrl)) {
             return chain.filter(exchange);
@@ -62,11 +70,12 @@ public class AuthorizeFilter implements GlobalFilter {
         // 从请求头中解析 Authorization  value:  bearer xxxxxxx
         // 或者从请求参数中解析 access_token
         //第一步:解析出我们Authorization的请求头  value为: “bearer XXXXXXXXXXXXXX”
-        String authHeader = exchange.getRequest().getHeaders().getFirst("Authorization");
-
+        String authHeader = exchange.getRequest()
+                .getHeaders().getFirst("Authorization");
         //第二步:判断Authorization的请求头是否为空
         if (StringUtils.isEmpty(authHeader)) {
-            throw new NullPointerException("需要认证的url,请求头为空");
+            return WebUtils.
+                    writeResponse(exchange.getResponse(), 401, "未携带token");
         }
 
         //3. 校验token
@@ -80,7 +89,8 @@ public class AuthorizeFilter implements GlobalFilter {
             }
             claims = jwtUtils.validateJwtToken(authHeader, publicKey);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return WebUtils.
+                    writeResponse(exchange.getResponse(), 401, "token无效");
         }
 
         //4. 校验通过后，从token中获取的用户登录信息存储到请求头中
@@ -90,15 +100,20 @@ public class AuthorizeFilter implements GlobalFilter {
         return chain.filter(webExchange);
     }
 
+
     private ServerWebExchange wrapHeader(ServerWebExchange serverWebExchange, Claims claims) {
 
-        String userId = claims.get("additionalInfo", Map.class).get("id").toString();
+        String userId = claims.get("additionalInfo", Map.class).get("id") != null ?
+                claims.get("additionalInfo", Map.class).get("id").toString() : null;
 
-        String nickName = claims.get("additionalInfo", Map.class).get("nickName").toString();
+        String nickName = claims.get("additionalInfo", Map.class).get("nickName") != null ?
+                claims.get("additionalInfo", Map.class).get("nickName").toString() : null;
 
-        String picture = claims.get("additionalInfo", Map.class).get("picture").toString();
+        String picture = claims.get("additionalInfo", Map.class).get("picture") != null ?
+                claims.get("additionalInfo", Map.class).get("picture").toString() : null;
 
-        String phoneNumber = claims.get("additionalInfo", Map.class).get("phoneNumber").toString();
+        String phoneNumber = claims.get("additionalInfo", Map.class).get("phoneNumber") != null ?
+                claims.get("additionalInfo", Map.class).get("phoneNumber").toString() : null;
 
         String userStatus = claims.get("additionalInfo", Map.class)
                 .get("userStatus").toString();

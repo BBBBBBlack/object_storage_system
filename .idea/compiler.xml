@@ -10,6 +10,7 @@
         <module name="node" />
         <module name="order-service" />
         <module name="user-service" />
+        <module name="copy" />
         <module name="gateway" />
         <module name="oauth_server" />
       </profile>
@@ -17,6 +18,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="copy" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="node" options="-parameters" />
       <module name="oauth_server" options="-parameters" />

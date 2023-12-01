@@ -18,12 +18,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailService userDetailService;
 
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin().permitAll()
                 .and().authorizeRequests()
-                .antMatchers("/oauth/**","auth/**").permitAll()
+                .antMatchers("/oauth/**", "auth/**", "/email/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().logout().permitAll()

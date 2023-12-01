@@ -6,4 +6,8 @@ import org.example.pojo.User;
 @Mapper
 public interface UserMapper {
     User getUserByName(String userEmail);
+
+    void addUser(User user);
+
+    void updateUserById(User user);
 }
